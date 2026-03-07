@@ -25,16 +25,26 @@
 </head>
 <body class="p-4 md:p-8">
     <div class="max-w-6xl mx-auto">
-        <header class="flex justify-between items-center mb-8 bg-white/50 p-6 rounded-2xl glass">
+        <header class="flex flex-col md:flex-row justify-between items-center mb-8 bg-white/50 p-6 rounded-2xl glass gap-4">
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">Aplikasi Persuratan</h1>
-                <p class="text-gray-500 text-sm">Manajemen surat masuk kantor</p>
+                <p class="text-gray-500 text-sm">Manajemen surat masuk & keluar kantor</p>
             </div>
-            <a href="{{ route('surat.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl font-medium transition-all shadow-lg shadow-indigo-200 flex items-center gap-2">
+            
+            <nav class="flex items-center gap-2 bg-gray-100/50 p-1 rounded-xl">
+                <a href="{{ route('surat.index') }}" class="{{ request()->routeIs('surat.*') ? 'bg-white shadow-sm' : 'text-gray-500 hover:text-gray-700' }} px-4 py-2 rounded-lg font-medium transition-all text-sm">
+                    Surat Masuk
+                </a>
+                <a href="{{ route('surat-keluar.index') }}" class="{{ request()->routeIs('surat-keluar.*') ? 'bg-white shadow-sm' : 'text-gray-500 hover:text-gray-700' }} px-4 py-2 rounded-lg font-medium transition-all text-sm">
+                    Surat Keluar
+                </a>
+            </nav>
+
+            <a href="{{ request()->routeIs('surat-keluar.*') ? route('surat-keluar.create') : route('surat.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2.5 rounded-xl font-medium transition-all shadow-lg shadow-indigo-200 flex items-center gap-2 text-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
                 </svg>
-                Tambah Surat
+                Tambah {{ request()->routeIs('surat-keluar.*') ? 'Surat Keluar' : 'Surat Masuk' }}
             </a>
         </header>
 

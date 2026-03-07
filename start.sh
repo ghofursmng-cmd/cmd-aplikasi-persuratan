@@ -1,23 +1,25 @@
 #!/bin/bash
 
-# Ensure database directory exists
+# Pastikan folder database ada
 mkdir -p database
 
-# Create empty sqlite database if it doesn't exist
+# Buat file sqlite jika belum ada
 if [ ! -f database/database.sqlite ]; then
     touch database/database.sqlite
-    echo "Database file created."
+    echo "Database SQLite berhasil dibuat."
 fi
 
-# Run migrations
-echo "Running migrations..."
-php artisan migrate --force || echo "Migration failed, but proceeding to start server..."
+# Jalankan migrasi secara otomatis
+echo "Menjalankan migrasi database..."
+php artisan migrate --force
 
-# Clear and cache config for performance and to ensure env vars are picked up
-php artisan config:clear
-php artisan route:clear
-php artisan view:clear
+# Pembersihan cache untuk performa
+echo "Membersihkan cache..."
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
-# Start the Laravel application
-echo "Starting Laravel on port $PORT..."
+# Jalankan server
+# Menggunakan php artisan serve --host=0.0.0.0 --port=$PORT adalah standar Railway
+echo "Memulai server pada port $PORT..."
 php artisan serve --host=0.0.0.0 --port=$PORT
